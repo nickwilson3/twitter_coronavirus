@@ -26,3 +26,22 @@ if args.percent:
 items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
 for k,v in items:
     print(k,':',v)
+
+    # create sorted dictionary before plotting
+lists = sorted(sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)[:10], key=lambda kv: kv[1])
+key, value = zip(*lists)
+
+# create bar graph
+plt.bar(key, value, color = 'blue', width = 0.4)
+
+if args.input_path == 'reduced.lang':
+    plt.xlabel("Language")
+    plt.ylabel("Usage level of " + args.key)
+    plt.title("Tweets with " + args.key + " in each language in 2020")
+else:
+    plt.xlabel("Country")
+    plt.ylabel("Usage level of " + args.key)
+    plt.title("Tweets with " + args.key + " from each country in 2020")
+
+# save bar graph file to plots folder
+plt.savefig(args.input_path + args.key + 'ba.png')
