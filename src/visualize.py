@@ -11,11 +11,9 @@ args = parser.parse_args()
 # imports
 import os
 import json
-from collections import Counter,defaultdict
-import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-
+from collections import Counter,defaultdict
 
 # open the input path
 with open(args.input_path) as f:
@@ -26,13 +24,13 @@ if args.percent:
     for k in counts[args.key]:
         counts[args.key][k] /= counts['_all'][k]
 
-# print the count values
+# top ten keys
 items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
-top_ten = items[0:10]
+top_ten_items = items[0:10]
 
 keys = []
 values = []
-for key, value in top_ten:
+for key, value in top_ten_items:
     keys.append(key)
     values.append(value)
 
@@ -40,15 +38,16 @@ keys.reverse()
 values.reverse()
 print(keys, values)
 
-if args.input_path == 'reduced.lang':
-    plt.xlabel("Language")
-    plt.ylabel("Usage level of " + args.key)
-    plt.title("Tweets with " + args.key + " in each language in 2020")
-else:
-    plt.xlabel("Country")
-    plt.ylabel("Usage level of " + args.key)
-    plt.title("Tweets with " + args.key + " from each country in 2020")
+if args.input_path == "reduced.lang":
+    plt.title(f'Usage of {args.key} in 2020 Tweets, by Language')
+    plt.xlabel('Language')
+    category = "language"
 
+else: #reduced.country
+    plt.title(f'Usage of {args.key} in 2020 Tweets, by Country')
+    plt.xlabel('Country')
+    category = "country"
+
+plt.ylabel('Tweet Count')
 plt.bar(keys, values)
-# save bar graph file to plots folder
-plt.savefig(f'graphs/{args.input_path}__{args.key}_bar.png')
+plt.savefig(f'plots/{category}_{args.key}_barchart.png')
