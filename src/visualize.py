@@ -28,12 +28,17 @@ if args.percent:
 
 # print the count values
 items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
-for k,v in items:
-    print(k,':',v)
+top_ten = items[0:10]
 
-    # create sorted dictionary before plotting
-lists = sorted(sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)[:10], key=lambda kv: kv[1])
-key, value = zip(*lists)
+keys = []
+values = []
+for key, value in top_ten:
+    keys.append(key)
+    values.append(value)
+
+keys.reverse()
+values.reverse()
+print(keys, values)
 
 # create bar graph
 plt.bar(key, value, color = 'blue', width = 0.5)
@@ -48,4 +53,4 @@ else:
     plt.title("Tweets with " + args.key + " from each country in 2020")
 
 # save bar graph file to plots folder
-plt.savefig(args.input_path + args.key + 'ba.png')
+plt.savefig(f'graphs/{args.input_path}__{args.key}_bar.png')
