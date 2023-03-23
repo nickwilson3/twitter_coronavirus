@@ -40,9 +40,6 @@ keys.reverse()
 values.reverse()
 print(keys, values)
 
-# create bar graph
-plt.bar(key, value, color = 'blue', width = 0.5)
-
 if args.input_path == 'reduced.lang':
     plt.xlabel("Language")
     plt.ylabel("Usage level of " + args.key)
@@ -52,5 +49,6 @@ else:
     plt.ylabel("Usage level of " + args.key)
     plt.title("Tweets with " + args.key + " from each country in 2020")
 
+plt.bar(keys,values)
 # save bar graph file to plots folder
 plt.savefig(f'graphs/{args.input_path}__{args.key}_bar.png')
