@@ -49,6 +49,6 @@ else:
     plt.ylabel("Usage level of " + args.key)
     plt.title("Tweets with " + args.key + " from each country in 2020")
 
-plt.bar(keys,values)
+plt.bar(keys, values)
 # save bar graph file to plots folder
 plt.savefig(f'graphs/{args.input_path}__{args.key}_bar.png')
