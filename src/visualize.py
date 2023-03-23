@@ -14,7 +14,7 @@ import json
 from collections import Counter,defaultdict
 import matplotlib
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 
 # open the input path
