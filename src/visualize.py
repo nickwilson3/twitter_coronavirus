@@ -24,19 +24,18 @@ if args.percent:
     for k in counts[args.key]:
         counts[args.key][k] /= counts['_all'][k]
 
-# top ten keys
+# print the count values
 items = sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)
-top_ten_items = items[0:10]
+for k,v in items:
+    print(k,':',v)
 
-keys = []
-values = []
-for key, value in top_ten_items:
-    keys.append(key)
-    values.append(value)
+# create sorted dictionary before plotting
+lists = sorted(sorted(counts[args.key].items(), key=lambda item: (item[1],item[0]), reverse=True)[:10], key=lambda kv: kv[1])
+key, value = zip(*lists)
 
-keys.reverse()
-values.reverse()
-print(keys, values)
+# create bar graph
+plt.bar(key, value, color = 'maroon', width = 0.4)
+
 
 if args.input_path == "reduced.lang":
     plt.title(f'Usage of {args.key} in 2020 Tweets, by Language')
@@ -49,5 +48,4 @@ else: #reduced.country
     category = "country"
 
 plt.ylabel('Tweet Count')
-plt.bar(keys, values)
 plt.savefig(f'plots/{category}_{args.key}_barchart.png')
